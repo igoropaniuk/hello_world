@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, Linaro Limited
+ * Copyright (c) 2016-2017, Linaro Limited
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,17 +32,35 @@
 #ifndef USER_TA_HEADER_DEFINES_H
 #define USER_TA_HEADER_DEFINES_H
 
-#include <hello_world_ta.h> /* To get the TA_HELLO_WORLD_UUID define */
+/* To get the TA UUID definition */
+#include <hello_world_ta.h>
 
-#define TA_UUID TA_HELLO_WORLD_UUID
+#define TA_UUID				TA_HELLO_WORLD_UUID
 
-#define TA_FLAGS                    (TA_FLAG_MULTI_SESSION | TA_FLAG_EXEC_DDR)
-#define TA_STACK_SIZE               (2 * 1024)
-#define TA_DATA_SIZE                (32 * 1024)
+/*
+ * TA properties: multi-instance TA, no specific attribute
+ * TA_FLAG_EXEC_DDR is meaningless but mandated.
+ */
+#define TA_FLAGS			TA_FLAG_EXEC_DDR
 
+/* Provisioned stack size */
+#define TA_STACK_SIZE			(2 * 1024)
+
+/* Provisioned heap size for TEE_Malloc() and friends */
+#define TA_DATA_SIZE			(32 * 1024)
+
+/* The gpd.ta.version property */
+#define TA_VERSION	"1.0"
+
+/* The gpd.ta.description property */
+#define TA_DESCRIPTION	"Example of OP-TEE Hello World Trusted Application"
+
+/* Extra properties */
 #define TA_CURRENT_TA_EXT_PROPERTIES \
-    { "gp.ta.description", USER_TA_PROP_TYPE_STRING, \
-        "Hello World TA" }, \
-    { "gp.ta.version", USER_TA_PROP_TYPE_U32, &(const uint32_t){ 0x0010 } }
+    { "org.linaro.optee.examples.hello_world.property1", \
+	USER_TA_PROP_TYPE_STRING, \
+        "Some string" }, \
+    { "org.linaro.optee.examples.hello_world.property2", \
+	USER_TA_PROP_TYPE_U32, &(const uint32_t){ 0x0010 } }
 
-#endif /*USER_TA_HEADER_DEFINES_H*/
+#endif /* USER_TA_HEADER_DEFINES_H */
